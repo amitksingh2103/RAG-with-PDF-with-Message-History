@@ -23,6 +23,8 @@ jobs:
       - name: Pull latest changes from Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           git remote add space https://amitksingh2103:$HF_TOKEN@huggingface.co/spaces/amitksingh2103/RAG-with-PDF-with-Message-History
           git fetch space main
@@ -31,5 +33,7 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           git push https://amitksingh2103:$HF_TOKEN@huggingface.co/spaces/amitksingh2103/RAG-with-PDF-with-Message-History main
