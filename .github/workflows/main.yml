@@ -1,0 +1,35 @@
+name: Sync to Hugging Face hub
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Set up git
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+      - name: Pull latest changes from Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add space https://amitksingh2103:$HF_TOKEN@huggingface.co/spaces/amitksingh2103/RAG-with-PDF-with-Message-History
+          git fetch space main
+          git merge space/main --allow-unrelated-histories --strategy-option=theirs
+
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git push https://amitksingh2103:$HF_TOKEN@huggingface.co/spaces/amitksingh2103/RAG-with-PDF-with-Message-History main
