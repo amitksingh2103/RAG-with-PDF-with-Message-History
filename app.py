@@ -14,11 +14,11 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-load_dotenv()
+groq_api=os.getenv('GROQ_API_KEY)
 
 st.title("🧠 Conversation RAG with PDF + Message History (GROQ)")
 
-model = ChatGroq(model_name='llama-3.1-8b-instant', groq_api_key=api_key)
+model = ChatGroq(model_name='llama-3.1-8b-instant', groq_api_key=groq_api)
 
     # Session ID
 session_id = st.text_input("Session ID:", value='default-session')
@@ -108,4 +108,5 @@ if uploaded_file:
 
         with st.expander("🧾 Chat History"):
             st.write(session_history.messages)
+
 
